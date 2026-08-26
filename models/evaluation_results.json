@@ -1,0 +1,27 @@
+{
+    "Linear Regression": {
+        "MAE": 8.58,
+        "MSE": 115.15,
+        "RMSE": 10.73,
+        "R2": 0.9544
+    },
+    "Support Vector Machine": {
+        "MAE": 9.08,
+        "MSE": 127.82,
+        "RMSE": 11.31,
+        "R2": 0.9494
+    },
+    "Random Forest": {
+        "MAE": 8.17,
+        "MSE": 105.89,
+        "RMSE": 10.29,
+        "R2": 0.958
+    },
+    "XGBoost": {
+        "MAE": 7.5,
+        "MSE": 90.4,
+        "RMSE": 9.51,
+        "R2": 0.9642
+    },
+    "XGBoost_vs_Linear_MAE_Reduction_Pct": 12.59
+}
