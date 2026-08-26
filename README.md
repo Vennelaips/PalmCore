@@ -24,28 +24,6 @@ PalmCore is an advanced AI-powered simulation and decision-support dashboard des
 
 ---
 
-## 🚀 Quick Start Guide
-
-### 1. Install Dependencies
-```bash
-python -m pip install -r requirements.txt
-```
-
-### 2. Generate Synthetic Historical Trade Dataset
-```bash
-python data/synthetic_data_generator.py
-```
-
-### 3. Train and Benchmark AI Models
-```bash
-python models/pipeline.py
-```
-
-### 4. Launch the Streamlit Dashboard
-```bash
-python -m streamlit run app.py
-```
-
 ---
 
 ## 📁 Project Architecture
