@@ -1,6 +1,7 @@
 """
 PalmCore - Simulation Engine & Economic Impact Calculator
 Handles multi-model inference, tariff sensitivity sweeps, and fiscal/economic policy metrics.
+Features version-resilient automated fallback training.
 """
 
 import os
@@ -11,11 +12,37 @@ from typing import Dict, Any, Tuple, List
 
 class SimulationEngine:
     def __init__(self, model_artifact_path: str = None):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
         if model_artifact_path is None:
-            current_dir = os.path.dirname(os.path.abspath(__file__))
             model_artifact_path = os.path.join(current_dir, "..", "models", "trained_models.pkl")
             
-        self.artifacts = joblib.load(model_artifact_path)
+        data_csv_path = os.path.join(current_dir, "..", "data", "palm_oil_trade_dataset.csv")
+        
+        self.artifacts = None
+        
+        # 1. Try to load pre-trained pickle
+        if os.path.exists(model_artifact_path):
+            try:
+                self.artifacts = joblib.load(model_artifact_path)
+            except Exception as e:
+                print(f"[PalmCore] Notice: Unpickling artifact failed ({e}). Re-training dynamically for current environment...")
+                self.artifacts = None
+                
+        # 2. Resilient Fallback: If pickle is missing or incompatible with cloud environment version
+        if self.artifacts is None:
+            from models.pipeline import train_pipeline_from_df
+            if os.path.exists(data_csv_path):
+                df = pd.read_csv(data_csv_path)
+            else:
+                from data.synthetic_data_generator import generate_palm_oil_trade_data
+                df = generate_palm_oil_trade_data(n_samples=4500, random_state=42)
+                
+            self.artifacts = train_pipeline_from_df(df)
+            try:
+                joblib.dump(self.artifacts, model_artifact_path)
+            except Exception:
+                pass
+                
         self.models = self.artifacts["models"]
         self.preprocessor = self.artifacts["preprocessor"]
         self.num_cols = self.artifacts["num_cols"]
@@ -26,7 +53,6 @@ class SimulationEngine:
 
     def prepare_input_dataframe(self, params: Dict[str, Any]) -> pd.DataFrame:
         """Converts user input parameters into model-ready DataFrame."""
-        # Calculate derived features
         cpo_price = float(params["cpo_benchmark_price_usd"])
         soy_price = float(params["soybean_oil_price_usd"])
         sun_price = float(params["sunflower_oil_price_usd"])
@@ -77,7 +103,7 @@ class SimulationEngine:
         landed_cost = cif_before_tariff * (1.0 + tariff / 100.0)
         
         # Economic calculations
-        # 1. Total import bill ($ Millions) = Volume (kMT) * 1000 MT * Landed Price / 1e6
+        # 1. Total import bill ($ Millions)
         total_import_bill_m_usd = (xgb_vol * 1000.0 * landed_cost) / 1e6
         
         # 2. Government Tariff Revenue ($ Millions)
@@ -94,7 +120,7 @@ class SimulationEngine:
         volume_delta_kmt = xgb_vol - baseline_vol_zero_tariff
         volume_delta_pct = (volume_delta_kmt / baseline_vol_zero_tariff) * 100.0 if baseline_vol_zero_tariff > 0 else 0.0
         
-        # 5. Importer Price Inflation Impact (% increase in landed raw material cost)
+        # 5. Importer Price Inflation Impact (%)
         raw_inflation_pct = ((landed_cost - cif_before_tariff) / cif_before_tariff) * 100.0
         
         # 6. Soft oil substitution estimated capture
@@ -147,7 +173,6 @@ class SimulationEngine:
                 pred = float(model.predict(X_trans)[0])
                 row[f"{name}_vol_kmt"] = max(5.0, round(pred, 2))
                 
-            # Economic metrics based on XGBoost
             xgb_vol = row["XGBoost_vol_kmt"]
             row["tariff_revenue_m_usd"] = round((xgb_vol * 1000.0 * cif_base * (t / 100.0)) / 1e6, 2)
             row["import_bill_m_usd"] = round((xgb_vol * 1000.0 * landed) / 1e6, 2)

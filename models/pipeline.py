@@ -50,10 +50,8 @@ def build_feature_pipeline():
     
     return preprocessor, numerical_features, categorical_features
 
-def train_and_evaluate_models(data_path: str, output_dir: str):
-    os.makedirs(output_dir, exist_ok=True)
-    df = pd.read_csv(data_path)
-    
+def train_pipeline_from_df(df: pd.DataFrame) -> dict:
+    """Trains all models directly in-memory and returns the artifacts dictionary."""
     preprocessor, num_cols, cat_cols = build_feature_pipeline()
     
     feature_cols = cat_cols + num_cols
@@ -115,7 +113,6 @@ def train_and_evaluate_models(data_path: str, output_dir: str):
     }
     
     evaluation = {}
-    
     for name, (model, preds) in models_dict.items():
         mae = float(mean_absolute_error(y_test, preds))
         mse = float(mean_squared_error(y_test, preds))
@@ -141,7 +138,6 @@ def train_and_evaluate_models(data_path: str, output_dir: str):
         "importance": importances
     }).sort_values("importance", ascending=False)
     
-    # Clean feature names for display
     clean_feature_map = {
         "tariff_rate_pct": "Tariff Rate (%)",
         "export_levy_usd": "Export Levy ($/MT)",
@@ -183,23 +179,33 @@ def train_and_evaluate_models(data_path: str, output_dir: str):
             "indices": list(X_test.index)
         }
     }
+    return artifacts
+
+def train_and_evaluate_models(data_path: str, output_dir: str):
+    os.makedirs(output_dir, exist_ok=True)
+    df = pd.read_csv(data_path)
+    artifacts = train_pipeline_from_df(df)
     
     model_artifact_path = os.path.join(output_dir, "trained_models.pkl")
-    joblib.dump(artifacts, model_artifact_path)
-    
+    try:
+        joblib.dump(artifacts, model_artifact_path)
+    except Exception as e:
+        print(f"Warning: Could not save pickle artifact: {e}")
+        
     metrics_path = os.path.join(output_dir, "evaluation_results.json")
     with open(metrics_path, "w") as f:
-        json.dump(evaluation, f, indent=4)
+        json.dump(artifacts["evaluation"], f, indent=4)
         
     print("="*65)
     print("MODEL TRAINING & BENCHMARK REPORT")
     print("="*65)
-    for model_name, metrics in evaluation.items():
+    for model_name, metrics in artifacts["evaluation"].items():
         if model_name != "XGBoost_vs_Linear_MAE_Reduction_Pct":
             print(f"[{model_name:22s}] R²: {metrics['R2']:.4f} | MAE: {metrics['MAE']:5.2f} kMT | RMSE: {metrics['RMSE']:5.2f} kMT | MSE: {metrics['MSE']:6.2f}")
     print("="*65)
-    print(f"XGBoost vs Linear Regression MAE Reduction: {mae_reduction_pct}%")
+    print(f"XGBoost vs Linear Regression MAE Reduction: {artifacts['evaluation']['XGBoost_vs_Linear_MAE_Reduction_Pct']}%")
     print("="*65)
+    return artifacts
 
 if __name__ == "__main__":
     base_dir = os.path.dirname(os.path.abspath(__file__))
