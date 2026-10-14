@@ -1,6 +1,7 @@
 """
 PalmCore - AI-Powered Palm Oil Tariff Impact Simulator & Decision Support Dashboard
 Powered by Python, Streamlit, XGBoost, Random Forest, SVM, Linear Regression, Pandas, NumPy, Scikit-Learn.
+Clean, professional white background with refined forest green typography.
 """
 
 import streamlit as st
@@ -30,7 +31,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Apply sleek styling
+# Apply sleek light & green styling
 apply_custom_css()
 
 # Cache simulation engine loading
@@ -51,11 +52,11 @@ df_historical = load_dataset()
 
 # ----------------- SIDEBAR CONTROLS -----------------
 st.sidebar.markdown("""
-<div style="text-align: center; padding: 12px 0 18px 0;">
-    <div style="font-size: 1.8rem; font-weight: 800; background: linear-gradient(90deg, #4ade80, #facc15); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+<div style="text-align: center; padding: 10px 0 16px 0; border-bottom: 1px solid #e2e8f0; margin-bottom: 14px;">
+    <div style="font-size: 1.75rem; font-weight: 800; color: #14532d; letter-spacing: -0.5px;">
         🌴 PalmCore
     </div>
-    <div style="font-size: 0.8rem; color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase;">
+    <div style="font-size: 0.78rem; color: #15803d; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-top: 3px;">
         Tariff Impact & Market AI Simulator
     </div>
 </div>
@@ -165,7 +166,7 @@ st.markdown("""
 # TAB 1: TARIFF SCENARIO SIMULATOR
 # ==============================================================================
 if nav_tab == "⚡ Tariff Scenario Simulator":
-    st.markdown('<div class="palm-section-header">⚡ Live Policy Impact & Multi-Model Inference</div>', unsafe_allow_html=True)
+    st.markdown('<div class="palm-section-header">Live Policy Impact & Multi-Model Inference</div>', unsafe_allow_html=True)
     
     # 5 KPI Cards
     kpi_cols = st.columns(5)
@@ -184,7 +185,7 @@ if nav_tab == "⚡ Tariff Scenario Simulator":
     st.markdown("<br>", unsafe_allow_html=True)
     
     # Model Arena Live Prediction Cards
-    st.markdown('<div class="palm-section-header">🤖 Multi-Model Real-Time Consensus</div>', unsafe_allow_html=True)
+    st.markdown('<div class="palm-section-header">Multi-Model Real-Time Consensus</div>', unsafe_allow_html=True)
     
     m_cols = st.columns(4)
     model_badges = {
@@ -200,11 +201,11 @@ if nav_tab == "⚡ Tariff Scenario Simulator":
             diff_from_xgb = pred_val - xgb_vol
             diff_str = f"{diff_from_xgb:+.1f} kMT vs XGB" if m_name != "XGBoost" else "⭐ Benchmark Lead"
             st.markdown(f"""
-            <div class="palm-metric-card" style="border-top: 3px solid {THEME_COLORS[m_name]};">
+            <div class="palm-metric-card" style="border-top: 3.5px solid {THEME_COLORS[m_name]};">
                 <span class="badge-pill {badge_cls}">{m_name}</span>
-                <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 6px;">{desc}</div>
-                <div class="palm-metric-value" style="font-size: 1.6rem; margin: 8px 0; color: {THEME_COLORS[m_name]};">{pred_val:,.1f} <span style="font-size: 0.9rem; color: #94a3b8;">kMT</span></div>
-                <div style="font-size: 0.8rem; font-weight: 600; color: {'#4ade80' if m_name=='XGBoost' else '#94a3b8'};">{diff_str}</div>
+                <div style="font-size: 0.78rem; color: #64748b; margin-top: 6px; font-weight: 500;">{desc}</div>
+                <div class="palm-metric-value" style="font-size: 1.65rem; margin: 8px 0; color: #0f172a;">{pred_val:,.1f} <span style="font-size: 0.9rem; color: #64748b; font-weight: 500;">kMT</span></div>
+                <div style="font-size: 0.82rem; font-weight: 600; color: {'#15803d' if m_name=='XGBoost' else '#64748b'};">{diff_str}</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -218,11 +219,11 @@ if nav_tab == "⚡ Tariff Scenario Simulator":
     with c2:
         st.markdown("""
         <div class="benchmark-highlight-card">
-            <h4 style="margin-top:0; color: #4ade80;">💡 Economic Policy Takeaways</h4>
-            <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
-                • <b>Elasticity Shift Point:</b> Tariff increases beyond <b>15-18%</b> induce non-linear demand compression, shifting refinery intake to local soybean oil stocks.<br><br>
-                • <b>Revenue vs Volume Trade-off:</b> Peak government tariff collection occurs at approximately <b>22.5%</b> tariff rate, above which volume destruction outweighs the marginal rate gain.<br><br>
-                • <b>XGBoost Precision:</b> Decision trees capture localized corridor tariffs and soft oil spreads with <b>24% lower error (MAE 5.90 kMT)</b> compared to standard linear regression.
+            <h4 style="margin-top:0; color: #14532d; font-size: 1.15rem; font-weight: 700;">💡 Economic Policy Takeaways</h4>
+            <p style="color: #334155; font-size: 0.92rem; line-height: 1.65;">
+                • <b style="color: #15803d;">Elasticity Shift Point:</b> Tariff increases beyond <b>15-18%</b> induce non-linear demand compression, shifting refinery intake to local soybean oil stocks.<br><br>
+                • <b style="color: #15803d;">Revenue vs Volume Trade-off:</b> Peak government tariff collection occurs at approximately <b>22.5%</b> tariff rate, above which volume destruction outweighs the marginal rate gain.<br><br>
+                • <b style="color: #15803d;">XGBoost Precision:</b> Decision trees capture localized corridor tariffs and soft oil spreads with <b>24% lower error (MAE 5.90 kMT)</b> compared to standard linear regression.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -242,19 +243,19 @@ if nav_tab == "⚡ Tariff Scenario Simulator":
 # TAB 2: AI MODEL BENCHMARK ARENA
 # ==============================================================================
 elif nav_tab == "🏆 AI Model Benchmark Arena":
-    st.markdown('<div class="palm-section-header">🏆 Machine Learning Model Evaluation & Benchmark Arena</div>', unsafe_allow_html=True)
+    st.markdown('<div class="palm-section-header">Machine Learning Model Evaluation & Benchmark Arena</div>', unsafe_allow_html=True)
     
     eval_dict = engine.evaluation
     mae_red = eval_dict.get("XGBoost_vs_Linear_MAE_Reduction_Pct", 24.0)
     
     # Highlight Banner
     st.markdown(f"""
-    <div style="background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 14px; padding: 18px 24px; margin-bottom: 20px;">
-        <div style="font-size: 1.2rem; font-weight: 700; color: #4ade80;">
+    <div style="background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 60%, #ecfdf5 100%); border: 1px solid #86efac; border-radius: 14px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(22, 101, 52, 0.05);">
+        <div style="font-size: 1.25rem; font-weight: 800; color: #14532d;">
             🚀 XGBoost Performance Superiority: {mae_red}% MAE Prediction Error Reduction
         </div>
-        <div style="font-size: 0.95rem; color: #cbd5e1; margin-top: 4px;">
-            Engineered Python (Pandas, NumPy, Scikit-learn) pipeline rigorously benchmarked across <b>4 AI algorithms</b>. XGBoost achieves superior non-linear modeling with <b>0.93+ R²</b>, <b>5.90 MAE</b>, and <b>9.75 RMSE</b>.
+        <div style="font-size: 0.95rem; color: #334155; margin-top: 6px; line-height: 1.6;">
+            Engineered Python (Pandas, NumPy, Scikit-learn) pipeline rigorously benchmarked across <b style="color: #15803d;">4 AI algorithms</b>. XGBoost achieves superior non-linear modeling with <b style="color: #15803d;">0.93+ R²</b>, <b style="color: #15803d;">5.90 MAE</b>, and <b style="color: #15803d;">9.75 RMSE</b>.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -268,7 +269,7 @@ elif nav_tab == "🏆 AI Model Benchmark Arena":
         fig_radar = plot_radar_comparison(eval_dict)
         st.plotly_chart(fig_radar, use_container_width=True)
     with col_tbl:
-        st.markdown('<div class="palm-section-header" style="font-size: 1.1rem;">📋 Detailed Metric Benchmark Table</div>', unsafe_allow_html=True)
+        st.markdown('<div class="palm-section-header" style="font-size: 1.1rem;">Detailed Metric Benchmark Table</div>', unsafe_allow_html=True)
         
         table_rows = []
         for m_name in ["XGBoost", "Random Forest", "Support Vector Machine", "Linear Regression"]:
@@ -288,7 +289,7 @@ elif nav_tab == "🏆 AI Model Benchmark Arena":
 # TAB 3: FISCAL & POLICY IMPACT HUB
 # ==============================================================================
 elif nav_tab == "🏛️ Fiscal & Policy Impact Hub":
-    st.markdown('<div class="palm-section-header">🏛️ Government Fiscal Revenues & Trade Elasticity Analysis</div>', unsafe_allow_html=True)
+    st.markdown('<div class="palm-section-header">Government Fiscal Revenues & Trade Elasticity Analysis</div>', unsafe_allow_html=True)
     
     fig_fiscal = plot_fiscal_revenue_curve(sweep_df, tariff_rate_pct)
     st.plotly_chart(fig_fiscal, use_container_width=True)
@@ -297,13 +298,13 @@ elif nav_tab == "🏛️ Fiscal & Policy Impact Hub":
     with f1:
         st.markdown(f"""
         <div class="palm-metric-card">
-            <h4 style="margin-top:0; color: #38bdf8;">📊 Fiscal Assessment for {destination_country}</h4>
-            <table style="width: 100%; font-size: 0.9rem; color: #cbd5e1; border-collapse: collapse;">
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><td style="padding: 8px 0;">Base CIF Price (Pre-Tariff):</td><td style="text-align: right; font-weight:700; color:#f8fafc;">${sim_result['cif_before_tariff_usd_mt']:,.2f} / MT</td></tr>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><td style="padding: 8px 0;">Landed Cost (Post-Tariff):</td><td style="text-align: right; font-weight:700; color:#f8fafc;">${sim_result['landed_cost_usd_mt']:,.2f} / MT</td></tr>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><td style="padding: 8px 0;">Current Tariff Rate:</td><td style="text-align: right; font-weight:700; color:#4ade80;">{tariff_rate_pct:.1f}%</td></tr>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><td style="padding: 8px 0;">Projected Customs Revenue:</td><td style="text-align: right; font-weight:700; color:#facc15;">${sim_result['tariff_revenue_m_usd']:,.2f} Million</td></tr>
-                <tr><td style="padding: 8px 0;">Trade Disruption vs Free Trade:</td><td style="text-align: right; font-weight:700; color:#f87171;">{sim_result['volume_delta_kmt']:+,.1f} kMT ({sim_result['volume_delta_pct']:+.1f}%)</td></tr>
+            <h4 style="margin-top:0; color: #14532d; font-size: 1.1rem; font-weight: 700;">📊 Fiscal Assessment for {destination_country}</h4>
+            <table style="width: 100%; font-size: 0.92rem; color: #334155; border-collapse: collapse;">
+                <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">Base CIF Price (Pre-Tariff):</td><td style="text-align: right; font-weight:700; color:#0f172a;">${sim_result['cif_before_tariff_usd_mt']:,.2f} / MT</td></tr>
+                <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">Landed Cost (Post-Tariff):</td><td style="text-align: right; font-weight:700; color:#0f172a;">${sim_result['landed_cost_usd_mt']:,.2f} / MT</td></tr>
+                <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">Current Tariff Rate:</td><td style="text-align: right; font-weight:700; color:#15803d;">{tariff_rate_pct:.1f}%</td></tr>
+                <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">Projected Customs Revenue:</td><td style="text-align: right; font-weight:700; color:#d97706;">${sim_result['tariff_revenue_m_usd']:,.2f} Million</td></tr>
+                <tr><td style="padding: 10px 0;">Trade Disruption vs Free Trade:</td><td style="text-align: right; font-weight:700; color:#dc2626;">{sim_result['volume_delta_kmt']:+,.1f} kMT ({sim_result['volume_delta_pct']:+.1f}%)</td></tr>
             </table>
         </div>
         """, unsafe_allow_html=True)
@@ -311,13 +312,13 @@ elif nav_tab == "🏛️ Fiscal & Policy Impact Hub":
     with f2:
         st.markdown(f"""
         <div class="palm-metric-card">
-            <h4 style="margin-top:0; color: #c084fc;">🌻 Vegetable Oil Cross-Elasticity & Substitution</h4>
-            <table style="width: 100%; font-size: 0.9rem; color: #cbd5e1; border-collapse: collapse;">
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><td style="padding: 8px 0;">Soy-Palm Price Spread:</td><td style="text-align: right; font-weight:700; color:#f8fafc;">+${soybean_oil_price_usd - cpo_benchmark_price_usd:,.1f} / MT</td></tr>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><td style="padding: 8px 0;">Sunflower-Palm Spread:</td><td style="text-align: right; font-weight:700; color:#f8fafc;">+${sunflower_oil_price_usd - cpo_benchmark_price_usd:,.1f} / MT</td></tr>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><td style="padding: 8px 0;">Estimated Soft Oil Capture:</td><td style="text-align: right; font-weight:700; color:#38bdf8;">{sim_result['soy_shift_kmt']:,.1f} kMT</td></tr>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><td style="padding: 8px 0;">Consumer Food Inflation Pressure:</td><td style="text-align: right; font-weight:700; color:{'#f87171' if sim_result['raw_inflation_pct'] > 10 else '#4ade80'};">{sim_result['raw_inflation_pct']:+.1f}%</td></tr>
-                <tr><td style="padding: 8px 0;">Domestic Biodiesel Absorption:</td><td style="text-align: right; font-weight:700; color:#cbd5e1;">B{biodiesel_mandate_pct:.0f} Program ({biodiesel_mandate_pct}%)</td></tr>
+            <h4 style="margin-top:0; color: #14532d; font-size: 1.1rem; font-weight: 700;">🌻 Vegetable Oil Cross-Elasticity & Substitution</h4>
+            <table style="width: 100%; font-size: 0.92rem; color: #334155; border-collapse: collapse;">
+                <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">Soy-Palm Price Spread:</td><td style="text-align: right; font-weight:700; color:#0f172a;">+${soybean_oil_price_usd - cpo_benchmark_price_usd:,.1f} / MT</td></tr>
+                <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">Sunflower-Palm Spread:</td><td style="text-align: right; font-weight:700; color:#0f172a;">+${sunflower_oil_price_usd - cpo_benchmark_price_usd:,.1f} / MT</td></tr>
+                <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">Estimated Soft Oil Capture:</td><td style="text-align: right; font-weight:700; color:#0284c7;">{sim_result['soy_shift_kmt']:,.1f} kMT</td></tr>
+                <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0;">Consumer Food Inflation Pressure:</td><td style="text-align: right; font-weight:700; color:{'#dc2626' if sim_result['raw_inflation_pct'] > 10 else '#15803d'};">{sim_result['raw_inflation_pct']:+.1f}%</td></tr>
+                <tr><td style="padding: 10px 0;">Domestic Biodiesel Absorption:</td><td style="text-align: right; font-weight:700; color:#475569;">B{biodiesel_mandate_pct:.0f} Program ({biodiesel_mandate_pct}%)</td></tr>
             </table>
         </div>
         """, unsafe_allow_html=True)
@@ -327,7 +328,7 @@ elif nav_tab == "🏛️ Fiscal & Policy Impact Hub":
 # TAB 4: FEATURE DRIVERS & SENSITIVITY GRID
 # ==============================================================================
 elif nav_tab == "🔍 Feature Drivers & Sensitivity Grid":
-    st.markdown('<div class="palm-section-header">🔍 Key Market Drivers & 2D Response Surface</div>', unsafe_allow_html=True)
+    st.markdown('<div class="palm-section-header">Key Market Drivers & 2D Response Surface</div>', unsafe_allow_html=True)
     
     col_feat, col_grid = st.columns([1, 1])
     
@@ -345,7 +346,7 @@ elif nav_tab == "🔍 Feature Drivers & Sensitivity Grid":
 # TAB 5: HISTORICAL DATA & RESIDUAL DIAGNOSTICS
 # ==============================================================================
 elif nav_tab == "📈 Historical Data & Residual Diagnostics":
-    st.markdown('<div class="palm-section-header">📈 Machine Learning Model Diagnostics & Historical Trade Data</div>', unsafe_allow_html=True)
+    st.markdown('<div class="palm-section-header">Machine Learning Model Diagnostics & Historical Trade Data</div>', unsafe_allow_html=True)
     
     diag1, diag2 = st.columns(2)
     with diag1:
@@ -355,7 +356,7 @@ elif nav_tab == "📈 Historical Data & Residual Diagnostics":
         fig_res = plot_residuals_distribution(engine.test_diagnostics)
         st.plotly_chart(fig_res, use_container_width=True)
         
-    st.markdown('<div class="palm-section-header" style="font-size: 1.1rem;">🗃️ Historical Trade Dataset Explorer (4,500+ Multi-Corridor Observations)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="palm-section-header" style="font-size: 1.1rem;">Historical Trade Dataset Explorer (4,500+ Multi-Corridor Observations)</div>', unsafe_allow_html=True)
     if df_historical is not None:
         c_filter1, c_filter2 = st.columns(2)
         with c_filter1:
@@ -373,7 +374,7 @@ elif nav_tab == "📈 Historical Data & Residual Diagnostics":
 
 # Footer
 st.markdown("""
-<div style="text-align: center; color: #64748b; font-size: 0.8rem; margin-top: 40px; padding: 20px 0; border-top: 1px solid rgba(255, 255, 255, 0.05);">
-    🌴 PalmCore AI Palm Oil Tariff Impact Simulator • Built with Python, Streamlit, XGBoost, Random Forest, SVM & Scikit-learn.
+<div style="text-align: center; color: #64748b; font-size: 0.82rem; margin-top: 45px; padding: 22px 0; border-top: 1px solid #e2e8f0;">
+    🌴 <b style="color: #14532d;">PalmCore</b> AI Palm Oil Tariff Impact Simulator • Built with Python, Streamlit, XGBoost, Random Forest, SVM & Scikit-learn.
 </div>
 """, unsafe_allow_html=True)
